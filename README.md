@@ -1,38 +1,37 @@
-# 🧾 Project Sales System MS - Backend
+# 🛍️ Project Sales System - Frontend
 
 ¡Hola a todos! 👋
 
-Este proyecto contiene los **microservicios del sistema de ventas**. A continuación, te explicamos cómo levantar el proyecto correctamente.
+Este proyecto contiene el **frontend del sistema de ventas**, desarrollado con **Angular 19**, **PrimeNG** y **TailwindCSS**. A continuación, te mostramos cómo configurarlo y ejecutarlo correctamente.
 
 ---
 
 ## 🚀 Pasos para ejecutar el proyecto
 
-1. **Ejecuta todos los microservicios**, incluyendo el **API Gateway**.
-2. Configura tu archivo `application.yaml` para que apunte a tu base de datos **local**.
-3. Dentro del proyecto encontrarás una carpeta llamada `backup`, donde se encuentra el archivo `db-2025.bak`.
-   - Ese archivo contiene la base de datos oficial del proyecto.
-   - Usa este backup para restaurar la BD en tu gestor de base de datos (ej: SQL Server).
-4. Si presentas errores al restaurar la BD, también te proporcionamos el contenido en **texto plano** para ejecutarlo directamente.
+1. **Clona el repositorio** e ingresa al directorio
+2. Instala las dependencias del proyecto:
+npm install
+3. Configura la URL del backend en el archivo src/environments/environment.ts:
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api' // URL del API Gateway
+};
+4. Ejecuta la aplicación:
+ng serve
 
----
+La aplicación estará disponible en:
+👉 http://localhost:4200
 
-## 📦 Herramientas necesarias
+📦 Herramientas necesarias
+Node.js 18 o superior ⚙️
 
-- Java 17 o superior ☕
-- Spring Boot
-- MYSQL (o gestor compatible con el `.bak`)
-- Maven
-- Postman (opcional)
+Angular CLI
 
----
+PrimeNG
 
-## 📫 Colecciones de Postman
+TailwindCSS
 
-Se incluye una colección de APIs en Postman para que puedas probar los endpoints fácilmente.
+🎨 Estilos y componentes
+TailwindCSS se usa para estilos utilitarios modernos.
 
----
-
-## 🧠 Importante
-
-Todos los microservicios comparten una **única base de datos**, por lo tanto debes **restaurarla antes de iniciar** el sistema.
+PrimeNG se utiliza para construir componentes visuales y funcionales como tablas, diálogos y formularios.
