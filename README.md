@@ -1,36 +1,38 @@
-🛍️ Project Sales System - Frontend
-¡Bienvenido al frontend del sistema de ventas! Este proyecto ha sido desarrollado en Angular 19, utilizando PrimeNG para los componentes UI y TailwindCSS para la personalización de estilos.
+# 🧾 Project Sales System MS - Backend
 
-🚀 Cómo ejecutar el proyecto
-1. Clona el repositorio
+¡Hola a todos! 👋
 
-2. 2. Instala las dependencias
-bash
-Copiar
-Editar
-npm install
-3. Configura el entorno
-Edita el archivo src/environments/environment.ts con la URL de tu API Gateway (backend):
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api' // Cambia esto según tu entorno backend
+Este proyecto contiene los **microservicios del sistema de ventas**. A continuación, te explicamos cómo levantar el proyecto correctamente.
 
-};
-4. Ejecuta el proyecto
-ng serve
-La aplicación estará disponible en:
-📍 http://localhost:4200
+---
 
-📦 Tecnologías utilizadas
-✅ Angular 19
-✅ PrimeNG
-✅ TailwindCSS
-✅ RxJS
-✅ TypeScript
+## 🚀 Pasos para ejecutar el proyecto
 
-✨ Características
-Gestión de productos, ventas y usuarios
-Tablas, formularios y diálogos responsivos con PrimeNG
-Estilos modernos y personalizables con TailwindCSS
-Consumo de microservicios desde un API Gateway
-Arquitectura modular y escalable
+1. **Ejecuta todos los microservicios**, incluyendo el **API Gateway**.
+2. Configura tu archivo `application.yaml` para que apunte a tu base de datos **local**.
+3. Dentro del proyecto encontrarás una carpeta llamada `backup`, donde se encuentra el archivo `db-2025.bak`.
+   - Ese archivo contiene la base de datos oficial del proyecto.
+   - Usa este backup para restaurar la BD en tu gestor de base de datos (ej: SQL Server).
+4. Si presentas errores al restaurar la BD, también te proporcionamos el contenido en **texto plano** para ejecutarlo directamente.
+
+---
+
+## 📦 Herramientas necesarias
+
+- Java 17 o superior ☕
+- Spring Boot
+- MYSQL (o gestor compatible con el `.bak`)
+- Maven
+- Postman (opcional)
+
+---
+
+## 📫 Colecciones de Postman
+
+Se incluye una colección de APIs en Postman para que puedas probar los endpoints fácilmente.
+
+---
+
+## 🧠 Importante
+
+Todos los microservicios comparten una **única base de datos**, por lo tanto debes **restaurarla antes de iniciar** el sistema.
