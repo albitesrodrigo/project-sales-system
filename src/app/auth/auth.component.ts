@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -10,53 +11,53 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class AuthComponent {
-  username: string = '';
-  password: string = '';
-  checked: boolean = false;
+  username: string = 'admin';
+  password: string = 'admin123';
+  rememberMe: boolean = false;
   loading: boolean = false;
 
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
-     private router: Router
-  ) {}
+    private router: Router
+  ) { }
 
-  login() {
-    this.router.navigate(['/inicio/clientes']);
-    // this.loading = true;
-    // if (!this.username || !this.password) {
-    //   this.loading = false;
-    //   this.messageService.add({
-    //     severity: 'warn',
-    //     summary: 'Campos incompletos',
-    //     detail: 'Por favor, completa todos los campos.',
-    //   });
-    //   return;
-    // }
-    // const data = {
-    //   username: this.username,
-    //   password: this.password,
-    // };
+  login(): void {
+    if (!this.username || !this.password) {
+      this.showError('Campos requeridos', 'Usuario y contraseña son obligatorios');
+      return;
+    }
 
-    // console.log('Datos de inicio de sesión:', data);
-    // this.authService.login(data).subscribe({
-    //   next: (response) => {
-    //     sessionStorage.setItem('token', response.data.access_token);
-    //     this.loading = false;
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: response.title || 'Inicio de sesión exitoso',
-    //       detail: response.message || 'Bienvenido de nuevo.',
-    //     });
-    //   },
-    //   error: (error) => {
-    //     this.loading = false;
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: error.title || 'Inicio de sesión fallido',
-    //       detail: error.message || 'Por favor, verifica tus credenciales.',
-    //     });
-    //   },
-    // });
+    this.loading = true;
+
+    this.authService.login({
+      username: this.username,
+      password: this.password
+    }).subscribe({
+      next: () => {
+
+        this.router.navigate(['/inicio/clientes']);
+
+      },
+      error: (error) => {
+        this.loading = false;
+        const message = error.status === 401
+          ? 'Credenciales incorrectas'
+          : 'Error al iniciar sesión. Intente nuevamente.';
+        this.showError('Error', message);
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+  private showError(summary: string, detail: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary,
+      detail,
+      life: 5000
+    });
   }
 }
