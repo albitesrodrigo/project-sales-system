@@ -20,21 +20,21 @@ export class ProductsService {
 
   createProduct(data: Product): Observable<StatusResponse<any>> {
     return this.http.post<StatusResponse<any>>(
-      `${this.API_URL}/productos`,
+      `${this.API_URL}/clients/productos`,
       data
     );
   }
 
   updateProduct(id: string, data: Product): Observable<StatusResponse<any>> {
     return this.http.put<StatusResponse<any>>(
-      `${this.API_URL}/productos/${id}`,
+      `${this.API_URL}/clients/productos/${id}`,
       data
     );
   }
 
   deleteProduct(id: string): Observable<StatusResponse<any>> {
     return this.http.delete<StatusResponse<any>>(
-      `${this.API_URL}/productos/${id}`
+      `${this.API_URL}/clients/productos/${id}`
     );
   }
 }

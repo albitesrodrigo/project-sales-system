@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { COLS_PRODUCTOS } from '../../data/headers';
-import { PRODUCTOS } from '../../utils/mock-data';
-import { ClientsService } from '../clients/service/clients.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Product } from '../../model/products.model';
 import { ProductsService } from './service/products.service';
@@ -36,6 +34,13 @@ export class ProductsComponent implements OnInit {
         this.loading = false;
         if (response.status === 'success') {
           this.products = response.data ?? [];
+        } else if (response.status === 'error') {
+          this.messageService.add({
+            severity: 'error',
+            summary: response.title || 'Error al cargar productos',
+            detail:
+              response.message || 'Por favor, inténtalo de nuevo más tarde.',
+          });
         }
       },
       error: (error) => {
@@ -79,8 +84,16 @@ export class ProductsComponent implements OnInit {
                   response.message ||
                   'El producto se ha eliminado correctamente.',
               });
+              this.fetchProducts();
+            } else if (response.status === 'error') {
+              this.messageService.add({
+                severity: 'error',
+                summary: response.title || 'Error al eliminar producto',
+                detail:
+                  response.message ||
+                  'Por favor, inténtalo de nuevo más tarde.',
+              });
             }
-            this.fetchProducts();
           },
           error: (error) => {
             this.loading = false;
@@ -115,16 +128,22 @@ export class ProductsComponent implements OnInit {
   }
 
   onProductSaved(productData: Product) {
+    productData = {
+      id: productData.id,
+      nombre: productData.nombre.trim(),
+      precio: productData.precio,
+      stock: productData.stock,
+    };
     this.loading = true;
-
     if (this.isEditing) {
       this.productsService
         .updateProduct(productData.id, productData)
         .subscribe({
           next: (response) => {
-            this.dialogVisible = false;
             this.loading = false;
             if (response.status === 'success') {
+              this.dialogVisible = false;
+
               this.messageService.add({
                 severity: 'success',
                 summary: response.title || 'Producto actualizado',
@@ -133,6 +152,14 @@ export class ProductsComponent implements OnInit {
                   'El producto se ha actualizado correctamente.',
               });
               this.fetchProducts();
+            } else if (response.status === 'error') {
+              this.messageService.add({
+                severity: 'error',
+                summary: response.title || 'Error al actualizar producto',
+                detail:
+                  response.message ||
+                  'Por favor, inténtalo de nuevo más tarde.',
+              });
             }
           },
           error: (error) => {
@@ -157,9 +184,9 @@ export class ProductsComponent implements OnInit {
       }
       this.productsService.createProduct(productData).subscribe({
         next: (response) => {
-          this.dialogVisible = false;
           this.loading = false;
           if (response.status === 'success') {
+            this.dialogVisible = false;
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Producto creado',
@@ -167,6 +194,13 @@ export class ProductsComponent implements OnInit {
                 response.message || 'El producto se ha creado correctamente.',
             });
             this.fetchProducts();
+          } else if (response.status === 'error') {
+            this.messageService.add({
+              severity: 'error',
+              summary: response.title || 'Error al crear producto',
+              detail:
+                response.message || 'Por favor, inténtalo de nuevo más tarde.',
+            });
           }
         },
         error: (error) => {

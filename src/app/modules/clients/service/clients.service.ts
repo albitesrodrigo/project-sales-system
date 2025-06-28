@@ -20,21 +20,21 @@ export class ClientsService {
 
   createClient(data: Client): Observable<StatusResponse<any>> {
     return this.http.post<StatusResponse<any>>(
-      `${this.API_URL}/clientes`,
+      `${this.API_URL}/clients/clientes`,
       data
     );
   }
 
   updateClient(id: string, data: Client): Observable<StatusResponse<any>> {
     return this.http.put<StatusResponse<any>>(
-      `${this.API_URL}/clientes/${id}`,
+      `${this.API_URL}/clients/clientes/${id}`,
       data
     );
   }
 
   deleteClient(id: string): Observable<StatusResponse<any>> {
     return this.http.delete<StatusResponse<any>>(
-      `${this.API_URL}/clientes/${id}`
+      `${this.API_URL}/clients/clientes/${id}`
     );
   }
 }

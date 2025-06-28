@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { COLS_CLIENTES } from '../../data/headers';
-import { CLIENTES } from '../../utils/mock-data';
 import { ClientsService } from './service/clients.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Client } from '../../model/clients.model';
@@ -33,13 +32,14 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getClients().subscribe({
       next: (response) => {
         this.loading = false;
-        if (response.status) {
+        if (response.status === 'success') {
           this.clients = response.data ?? [];
+        } else if (response.status === 'error') {
           this.messageService.add({
-            severity: 'success',
-            summary: response.title || 'Clientes cargados',
+            severity: 'error',
+            summary: response.title || 'Error al cargar clientes',
             detail:
-              response.message || 'Los clientes se han cargado correctamente.',
+              response.message || 'Por favor, inténtalo de nuevo más tarde.',
           });
         }
       },
@@ -77,9 +77,23 @@ export class ClientsComponent implements OnInit {
           next: (response) => {
             this.loading = false;
             if (response.status === 'success') {
-              this.clients = response.data ?? [];
+              this.messageService.add({
+                severity: 'success',
+                summary: response.title || 'Cliente eliminado',
+                detail:
+                  response.message ||
+                  'El cliente se ha eliminado correctamente.',
+              });
+              this.fetchClients();
+            } else if (response.status === 'error') {
+              this.messageService.add({
+                severity: 'error',
+                summary: response.title || 'Error al eliminar cliente',
+                detail:
+                  response.message ||
+                  'Por favor, inténtalo de nuevo más tarde.',
+              });
             }
-            this.fetchClients();
           },
           error: (error) => {
             this.loading = false;
@@ -115,12 +129,20 @@ export class ClientsComponent implements OnInit {
 
   onClientSaved(clientData: Client) {
     this.loading = true;
+    clientData = {
+      id: clientData.id,
+      nombre: clientData.nombre.trim(),
+      apellido: clientData.apellido.trim(),
+      correo: clientData.correo.trim(),
+      telefono: clientData.telefono.trim(),
+      dni: clientData.dni.trim(),
+    }
     if (this.isEditing && this.dataEdit) {
       this.clientsService.updateClient(this.dataEdit.id, clientData).subscribe({
         next: (response) => {
-          this.dialogVisible = false;
           this.loading = false;
           if (response.status === 'success') {
+            this.dialogVisible = false;
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Cliente actualizado',
@@ -128,8 +150,15 @@ export class ClientsComponent implements OnInit {
                 response.message ||
                 'El cliente se ha actualizado correctamente.',
             });
+            this.fetchClients();
+          } else if (response.status === 'error') {
+            this.messageService.add({
+              severity: 'error',
+              summary: response.title || 'Error al actualizar cliente',
+              detail:
+                response.message || 'Por favor, inténtalo de nuevo más tarde.',
+            });
           }
-          this.fetchClients();
         },
         error: (error) => {
           this.loading = false;
@@ -158,17 +187,24 @@ export class ClientsComponent implements OnInit {
       }
       this.clientsService.createClient(clientData).subscribe({
         next: (response) => {
-          this.dialogVisible = false;
           this.loading = false;
           if (response.status === 'success') {
+            this.dialogVisible = false;
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Cliente creado',
               detail:
                 response.message || 'El cliente se ha creado correctamente.',
             });
+            this.fetchClients();
+          } else if (response.status === 'error') {
+            this.messageService.add({
+              severity: 'error',
+              summary: response.title || 'Error al crear cliente',
+              detail:
+                response.message || 'Por favor, inténtalo de nuevo más tarde.',
+            });
           }
-          this.fetchClients();
         },
         error: (error) => {
           this.loading = false;
