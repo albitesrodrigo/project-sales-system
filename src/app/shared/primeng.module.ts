@@ -21,6 +21,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog'; 
 import { DialogClientComponent } from './dialog-client/dialog-client.component';
 import { DialogProductComponent } from './dialog-product/dialog-product.component';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { DialogProductComponent } from './dialog-product/dialog-product.componen
     PaginatorModule,
     ConfirmDialogModule,
     DialogModule,
+    ChartModule
   ],
   exports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { DialogProductComponent } from './dialog-product/dialog-product.componen
     PaginatorModule,
     ConfirmDialogModule, 
     DialogModule,
+    ChartModule,
     DialogClientComponent,
     DialogProductComponent
   ],

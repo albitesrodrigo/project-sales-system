@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
 
   constructor(private authService: AuthService, private router: Router) {}
-/*
+  /*
   ngOnInit() {
     this.items = [
       {
@@ -48,18 +48,24 @@ export class MenuComponent implements OnInit {
             items: menuList.map((menu) => ({
               label: menu.nombre,
               icon: menu.icono || 'pi pi-circle', // ícono por defecto si no hay
-              command: () => this.router.navigate([menu.url])
-            }))
-          }
+              command: () => this.router.navigate([menu.url]),
+            })),
+          },
         ];
       },
       error: (err) => {
         console.error('❌ Error cargando menús:', err);
-      }
+      },
     });
   }
   logout() {
-    sessionStorage.removeItem('token');
+    sessionStorage.clear();
+    localStorage.clear();
+    document.cookie.split(';').forEach((cookie) => {
+      document.cookie = cookie
+        .replace(/^ +/, '')
+        .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+    });
     this.router.navigate(['/login']);
   }
 }

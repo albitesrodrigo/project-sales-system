@@ -1,1 +1,204 @@
-<p>home works!</p>
+<div class="p-6 bg-gray-50 min-h-screen">
+  <!-- Header de bienvenida -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      <i class="pi pi-home mr-3 text-blue-600"></i>
+      Bienvenido al Sistema de Ventas
+    </h1>
+    <p class="text-gray-600">Dashboard principal - Resumen de actividades</p>
+  </div>
+
+  <!-- Tarjetas de resumen -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Ventas del mes -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm font-medium">Ventas del Mes</p>
+          <p class="text-2xl font-bold text-gray-800">S/. 15,420</p>
+          <p class="text-green-600 text-sm">
+            <i class="pi pi-arrow-up mr-1"></i>+12.5%
+          </p>
+        </div>
+        <div class="bg-blue-100 p-3 rounded-full">
+          <i class="pi pi-shopping-cart text-blue-600 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total de productos -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm font-medium">Total Productos</p>
+          <p class="text-2xl font-bold text-gray-800">247</p>
+          <p class="text-blue-600 text-sm">
+            <i class="pi pi-info-circle mr-1"></i>En stock
+          </p>
+        </div>
+        <div class="bg-orange-100 p-3 rounded-full">
+          <i class="pi pi-box text-orange-600 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total de clientes -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm font-medium">Total Clientes</p>
+          <p class="text-2xl font-bold text-gray-800">156</p>
+          <p class="text-green-600 text-sm">
+            <i class="pi pi-arrow-up mr-1"></i>+8 nuevos
+          </p>
+        </div>
+        <div class="bg-green-100 p-3 rounded-full">
+          <i class="pi pi-users text-green-600 text-xl"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Órdenes pendientes -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-500">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-600 text-sm font-medium">Órdenes Pendientes</p>
+          <p class="text-2xl font-bold text-gray-800">23</p>
+          <p class="text-red-600 text-sm">
+            <i class="pi pi-clock mr-1"></i>Atención requerida
+          </p>
+        </div>
+        <div class="bg-red-100 p-3 rounded-full">
+          <i class="pi pi-exclamation-triangle text-red-600 text-xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico y acciones rápidas -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Gráfico de ventas -->
+    <div class="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-gray-800">
+          <i class="pi pi-chart-line mr-2 text-blue-600"></i>
+          Tendencias de Ventas
+        </h2>
+        <div class="flex gap-2">
+          <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+            >Últimos 7 meses</span
+          >
+        </div>
+      </div>
+      <p-chart
+        type="line"
+        [data]="data"
+        [options]="options"
+        class="h-[25rem]"
+      />
+    </div>
+
+    <!-- Panel de acciones rápidas -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">
+        <i class="pi pi-bolt mr-2 text-yellow-600"></i>
+        Acciones Rápidas
+      </h3>
+
+      <div class="space-y-3">
+        <button
+          (click)="navigateToSales()"
+          class="w-full p-3 bg-blue-50 hover:bg-blue-100 rounded-lg text-left transition-colors"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-plus-circle text-blue-600 mr-3"></i>
+            <div>
+              <p class="font-medium text-gray-800">Nueva Venta</p>
+              <p class="text-sm text-gray-600">Registrar nueva transacción</p>
+            </div>
+          </div>
+        </button>
+        <button
+          (click)="navigateViewSales()"
+          class="w-full p-3 bg-purple-50 hover:bg-purple-100 rounded-lg text-left transition-colors"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-eye text-purple-600 mr-3"></i>
+            <div>
+              <p class="font-medium text-gray-800">Ver Venta</p>
+              <p class="text-sm text-gray-600">Ver detalle de venta</p>
+            </div>
+          </div>
+        </button>
+        <button
+          (click)="navigateToClients()"
+          class="w-full p-3 bg-green-50 hover:bg-green-100 rounded-lg text-left transition-colors"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-user-plus text-green-600 mr-3"></i>
+            <div>
+              <p class="font-medium text-gray-800">Agregar Cliente</p>
+              <p class="text-sm text-gray-600">Registrar nuevo cliente</p>
+            </div>
+          </div>
+        </button>
+
+        <button
+          (click)="navigateToProducts()"
+          class="w-full p-3 bg-orange-50 hover:bg-orange-100 rounded-lg text-left transition-colors"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-box text-orange-600 mr-3"></i>
+            <div>
+              <p class="font-medium text-gray-800">Agregar Producto</p>
+              <p class="text-sm text-gray-600">Nuevo producto al inventario</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actividad reciente -->
+  <!-- <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">
+      <i class="pi pi-clock mr-2 text-indigo-600"></i>
+      Actividad Reciente
+    </h3>
+
+    <div class="space-y-4">
+      <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+        <div class="bg-green-100 p-2 rounded-full mr-4">
+          <i class="pi pi-check text-green-600"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-medium text-gray-800">Venta completada</p>
+          <p class="text-sm text-gray-600">Cliente: Juan Pérez - S/. 350.00</p>
+        </div>
+        <span class="text-sm text-gray-500">Hace 5 min</span>
+      </div>
+
+      <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+        <div class="bg-blue-100 p-2 rounded-full mr-4">
+          <i class="pi pi-user-plus text-blue-600"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-medium text-gray-800">Nuevo cliente registrado</p>
+          <p class="text-sm text-gray-600">María García</p>
+        </div>
+        <span class="text-sm text-gray-500">Hace 1 hora</span>
+      </div>
+
+      <div class="flex items-center p-3 bg-gray-50 rounded-lg">
+        <div class="bg-orange-100 p-2 rounded-full mr-4">
+          <i class="pi pi-box text-orange-600"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-medium text-gray-800">Producto agregado</p>
+          <p class="text-sm text-gray-600">Laptop HP - Stock: 5 unidades</p>
+        </div>
+        <span class="text-sm text-gray-500">Hace 2 horas</span>
+      </div>
+    </div>
+  </div> -->
+</div>

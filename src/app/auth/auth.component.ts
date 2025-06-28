@@ -36,7 +36,7 @@ export class AuthComponent {
     }).subscribe({
       next: () => {
 
-        this.router.navigate(['/inicio/clientes']);
+        this.router.navigate(['/inicio/home']);
 
       },
       error: (error) => {
