@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { PrimeNG } from 'primeng/config';
+import { PRIMENG_ES } from '../assets/i18n/primeng-es';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  standalone: false,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'project-sales-system';
+    private primengConfig = inject(PrimeNG);
+
+  ngOnInit(): void {
+    this.primengConfig.setTranslation(PRIMENG_ES);
+  }
 }

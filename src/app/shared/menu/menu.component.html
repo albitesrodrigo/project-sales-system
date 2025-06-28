@@ -1,0 +1,77 @@
+<div class="h-full bg-white dark:bg-gray-900 flex flex-col">
+  <!-- Header del menú -->
+  <div class="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+    <span class="inline-flex items-center gap-2">
+      <i class="pi pi-chart-bar text-blue-600 text-2xl"></i>
+      <span class="text-xl font-semibold text-gray-800 dark:text-white">
+        SALES<span class="text-blue-600">APP</span>
+      </span>
+    </span>
+  </div>
+
+  <!-- Menú principal (flex-1 para ocupar espacio disponible) -->
+  <div class="flex-1 overflow-y-auto">
+    <p-menu
+      [model]="items"
+      styleClass="w-full border-0 bg-white dark:bg-gray-900"
+    >
+      <ng-template #submenuheader let-item>
+        <span class="text-blue-600 font-bold">{{ item.label }}</span>
+      </ng-template>
+
+      <ng-template #item let-item>
+        <a
+          pRipple
+          class="flex items-center p-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-800 cursor-pointer transition-colors duration-200"
+        >
+          <span
+            [class]="item.icon"
+            class="text-gray-500 dark:text-gray-400"
+          ></span>
+          <span class="ml-3">{{ item.label }}</span>
+          <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge" />
+          <span
+            *ngIf="item.shortcut"
+            class="ml-auto border border-gray-300 rounded bg-gray-100 text-gray-600 text-xs p-1"
+            >{{ item.shortcut }}</span
+          >
+        </a>
+      </ng-template>
+    </p-menu>
+  </div>
+
+  <!-- Footer del menú (siempre al final) -->
+  <div class="mt-auto bg-white dark:bg-gray-900">
+    <!-- Información del usuario -->
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+      <div
+        class="flex items-center p-2 text-gray-700 dark:text-gray-300 rounded"
+      >
+        <p-avatar
+          image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+          class="mr-3"
+          shape="circle"
+          size="normal"
+        />
+        <span class="inline-flex flex-col text-left">
+          <span class="font-bold text-sm">Amy Elsner</span>
+          <span class="text-xs text-gray-500 dark:text-gray-400"
+            >Admin</span
+          >
+        </span>
+      </div>
+    </div>
+
+    <!-- Botón de cerrar sesión -->
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-center">
+      <p-button
+        pRipple
+        icon="pi pi-sign-out"
+        class="p-button-danger flex justify-center items-center"
+        label="Cerrar Sesión"
+        severity="danger"
+        (click)="logout()"
+      ></p-button>
+    </div>
+  </div>
+</div>

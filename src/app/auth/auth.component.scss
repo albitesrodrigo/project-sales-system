@@ -1,0 +1,43 @@
+:host ::ng-deep {
+  .dark-theme .p-password input {
+    background-color: #1f2937 !important; 
+    color: white !important;
+    border-color: #374151 !important;
+  }
+  
+  .dark-theme .p-password .p-password-toggle-mask-icon {
+    color: #9ca3af !important;
+  }
+  
+  .p-checkbox .p-checkbox-box {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+  }
+  
+  .dark-button .p-button {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: white !important;
+  }
+  
+  .dark-button .p-button:hover {
+    background-color: #374151 !important;
+  }
+
+  .p-password input {
+    background-color: #1f2937 !important;
+    color: white !important;
+    border-color: #374151 !important;
+    border-radius: 8px;
+  }
+
+  .p-password input:focus {
+    background-color: #111827 !important;
+    border-color: #3b82f6 !important; 
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  }
+
+  .p-password input::placeholder {
+    color: #6b7280 !important; // Color del placeholder
+  }
+}
