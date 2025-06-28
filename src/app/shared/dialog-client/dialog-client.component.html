@@ -17,10 +17,10 @@
     />
   </div>
   <div class="grid grid-cols-3 gap-4 mb-4 items-center">
-    <label for="precio" class="col-span-1 font-semibold">Apellido</label>
+    <label for="apellido" class="col-span-1 font-semibold">Apellido</label>
     <input
       pInputText
-      id="precio"
+      id="apellido"
       class="col-span-2"
       autocomplete="off"
       type="text"
@@ -38,25 +38,27 @@
       [(ngModel)]="clientData.correo"
     />
   </div>
-    <div class="grid grid-cols-3 gap-4 mb-4 items-center">
-    <label for="stock" class="col-span-1 font-semibold">Teléfono</label>
+  <div class="grid grid-cols-3 gap-4 mb-4 items-center">
+    <label for="telefono" class="col-span-1 font-semibold">Teléfono</label>
     <input
       pInputText
-      id="stock"
+      id="telefono"
       class="col-span-2"
       autocomplete="off"
       type="text"
+      maxlength="9"
       [(ngModel)]="clientData.telefono"
     />
   </div>
-    <div class="grid grid-cols-3 gap-4 mb-4 items-center">
+  <div class="grid grid-cols-3 gap-4 mb-4 items-center">
     <label for="stock" class="col-span-1 font-semibold">DNI</label>
     <input
       pInputText
-      id="stock"
+      id="dni"
       class="col-span-2"
       autocomplete="off"
       type="text"
+      maxlength="8"
       [(ngModel)]="clientData.dni"
     />
   </div>

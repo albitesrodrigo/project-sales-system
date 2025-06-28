@@ -3,28 +3,38 @@ import { Injectable } from '@angular/core';
 import { Product } from '../../../model/products.model';
 import StatusResponse from '../../../model/response.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
   constructor(private http: HttpClient) {}
+  private readonly API_URL = environment.apiUrl;
 
-  getProducts(nameProduct: string): Observable<StatusResponse<Product[]>> {
+  getProducts(): Observable<StatusResponse<Product[]>> {
     return this.http.get<StatusResponse<Product[]>>(
-      'clients/productos'
+      `${this.API_URL}/clients/productos`
     );
   }
 
   createProduct(data: Product): Observable<StatusResponse<any>> {
-    return this.http.post<StatusResponse<any>>('/productos', data);
+    return this.http.post<StatusResponse<any>>(
+      `${this.API_URL}/productos`,
+      data
+    );
   }
 
   updateProduct(id: string, data: Product): Observable<StatusResponse<any>> {
-    return this.http.put<StatusResponse<any>>(`/productos/${id}`, data);
+    return this.http.put<StatusResponse<any>>(
+      `${this.API_URL}/productos/${id}`,
+      data
+    );
   }
 
   deleteProduct(id: string): Observable<StatusResponse<any>> {
-    return this.http.delete<StatusResponse<any>>(`/productos/${id}`);
+    return this.http.delete<StatusResponse<any>>(
+      `${this.API_URL}/productos/${id}`
+    );
   }
 }

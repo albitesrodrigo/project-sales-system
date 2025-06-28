@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from '../../../../environment';
 import { ApiResponse } from '../../model/apiResponse.model';
 import { Menu } from '../../model/menu.model'; // Asegúrate que sea tu modelo
+import { environment } from '../../../environments/environment';
 
 const AUTH_TOKEN_KEY = 'primeLandAuthToken';
 

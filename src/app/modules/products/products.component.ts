@@ -19,9 +19,7 @@ export class ProductsComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {}
   columns = COLS_PRODUCTOS;
-  productos = PRODUCTOS;
   products: Product[] = [];
-  nameProduct: string = '';
   loading: boolean = false;
   dialogVisible: boolean = false;
   isEditing: boolean = false;
@@ -33,17 +31,11 @@ export class ProductsComponent implements OnInit {
 
   fetchProducts() {
     this.loading = true;
-    this.productsService.getProducts(this.nameProduct).subscribe({
+    this.productsService.getProducts().subscribe({
       next: (response) => {
         this.loading = false;
-        if (response.status) {
+        if (response.status === 'success') {
           this.products = response.data ?? [];
-          this.messageService.add({
-            severity: 'success',
-            summary: response.title || 'Productos cargados',
-            detail:
-              response.message || 'Los productos se han cargado correctamente.',
-          });
         }
       },
       error: (error) => {
@@ -79,7 +71,7 @@ export class ProductsComponent implements OnInit {
         this.productsService.deleteProduct(product.id).subscribe({
           next: (response) => {
             this.loading = false;
-            if (response.status) {
+            if (response.status === 'success') {
               this.messageService.add({
                 severity: 'success',
                 summary: response.title || 'Producto eliminado',
@@ -132,7 +124,7 @@ export class ProductsComponent implements OnInit {
           next: (response) => {
             this.dialogVisible = false;
             this.loading = false;
-            if (response.status) {
+            if (response.status === 'success') {
               this.messageService.add({
                 severity: 'success',
                 summary: response.title || 'Producto actualizado',
@@ -154,11 +146,20 @@ export class ProductsComponent implements OnInit {
           },
         });
     } else {
+      if (!productData.nombre || !productData.precio || !productData.stock) {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Campos incompletos',
+          detail: 'Por favor, completa todos los campos requeridos.',
+        });
+        return;
+      }
       this.productsService.createProduct(productData).subscribe({
         next: (response) => {
           this.dialogVisible = false;
           this.loading = false;
-          if (response.status) {
+          if (response.status === 'success') {
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Producto creado',

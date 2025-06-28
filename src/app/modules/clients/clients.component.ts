@@ -18,9 +18,7 @@ export class ClientsComponent implements OnInit {
     private confirmationService: ConfirmationService
   ) {}
   columns = COLS_CLIENTES;
-  clientes = CLIENTES;
   clients: Client[] = [];
-  nameClient: string = '';
   loading: boolean = false;
   dialogVisible: boolean = false;
   isEditing: boolean = false;
@@ -32,7 +30,7 @@ export class ClientsComponent implements OnInit {
 
   fetchClients() {
     this.loading = true;
-    this.clientsService.getClients(this.nameClient).subscribe({
+    this.clientsService.getClients().subscribe({
       next: (response) => {
         this.loading = false;
         if (response.status) {
@@ -57,7 +55,6 @@ export class ClientsComponent implements OnInit {
   }
 
   trashClient(client: any, event: Event) {
-    console.log('Deleting client:', client);
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: `¿Estás seguro de que quieres eliminar a ${client.nombre} ${client.apellido}?`,
@@ -79,14 +76,8 @@ export class ClientsComponent implements OnInit {
         this.clientsService.deleteClient(client.id).subscribe({
           next: (response) => {
             this.loading = false;
-            if (response.status) {
-              this.messageService.add({
-                severity: 'success',
-                summary: response.title || 'Cliente eliminado',
-                detail:
-                  response.message ||
-                  'El cliente se ha eliminado correctamente.',
-              });
+            if (response.status === 'success') {
+              this.clients = response.data ?? [];
             }
             this.fetchClients();
           },
@@ -129,7 +120,7 @@ export class ClientsComponent implements OnInit {
         next: (response) => {
           this.dialogVisible = false;
           this.loading = false;
-          if (response.status) {
+          if (response.status === 'success') {
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Cliente actualizado',
@@ -150,11 +141,26 @@ export class ClientsComponent implements OnInit {
         },
       });
     } else {
+      if (
+        !clientData.nombre ||
+        !clientData.apellido ||
+        !clientData.telefono ||
+        !clientData.correo ||
+        !clientData.dni
+      ) {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Campos incompletos',
+          detail: 'Por favor, completa todos los campos requeridos.',
+        });
+        return;
+      }
       this.clientsService.createClient(clientData).subscribe({
         next: (response) => {
           this.dialogVisible = false;
           this.loading = false;
-          if (response.status) {
+          if (response.status === 'success') {
             this.messageService.add({
               severity: 'success',
               summary: response.title || 'Cliente creado',
