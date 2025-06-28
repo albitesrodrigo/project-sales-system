@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
   loading: boolean = false;
   dialogVisible: boolean = false;
   isEditing: boolean = false;
+  dataEdit: Product | null = null;
 
   ngOnInit(): void {
     this.fetchProducts();
@@ -75,7 +76,7 @@ export class ProductsComponent implements OnInit {
       },
       accept: () => {
         this.loading = true;
-        this.productsService.deleteProduct(product.telefono).subscribe({
+        this.productsService.deleteProduct(product.id).subscribe({
           next: (response) => {
             this.loading = false;
             if (response.status) {
@@ -115,8 +116,67 @@ export class ProductsComponent implements OnInit {
     this.dialogVisible = true;
   }
 
-  showDialogEditProduct() {
+  showDialogEditProduct(product: Product) {
     this.isEditing = true;
     this.dialogVisible = true;
+    this.dataEdit = product;
+  }
+
+  onProductSaved(productData: Product) {
+    this.loading = true;
+
+    if (this.isEditing) {
+      this.productsService
+        .updateProduct(productData.id, productData)
+        .subscribe({
+          next: (response) => {
+            this.dialogVisible = false;
+            this.loading = false;
+            if (response.status) {
+              this.messageService.add({
+                severity: 'success',
+                summary: response.title || 'Producto actualizado',
+                detail:
+                  response.message ||
+                  'El producto se ha actualizado correctamente.',
+              });
+              this.fetchProducts();
+            }
+          },
+          error: (error) => {
+            this.loading = false;
+            this.messageService.add({
+              severity: 'error',
+              summary: error.title || 'Error al actualizar producto',
+              detail:
+                error.message || 'Por favor, inténtalo de nuevo más tarde.',
+            });
+          },
+        });
+    } else {
+      this.productsService.createProduct(productData).subscribe({
+        next: (response) => {
+          this.dialogVisible = false;
+          this.loading = false;
+          if (response.status) {
+            this.messageService.add({
+              severity: 'success',
+              summary: response.title || 'Producto creado',
+              detail:
+                response.message || 'El producto se ha creado correctamente.',
+            });
+            this.fetchProducts();
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: error.title || 'Error al crear producto',
+            detail: error.message || 'Por favor, inténtalo de nuevo más tarde.',
+          });
+        },
+      });
+    }
   }
 }

@@ -24,6 +24,7 @@ export class ClientsComponent implements OnInit {
   loading: boolean = false;
   dialogVisible: boolean = false;
   isEditing: boolean = false;
+  dataEdit: Client | null = null;
 
   ngOnInit(): void {
     this.fetchClients();
@@ -75,7 +76,7 @@ export class ClientsComponent implements OnInit {
       },
       accept: () => {
         this.loading = true;
-        this.clientsService.deleteClient(client.telefono).subscribe({
+        this.clientsService.deleteClient(client.id).subscribe({
           next: (response) => {
             this.loading = false;
             if (response.status) {
@@ -105,7 +106,6 @@ export class ClientsComponent implements OnInit {
           severity: 'info',
           summary: 'Cancelado',
           detail: 'Eliminación cancelada',
-          
         });
       },
     });
@@ -116,8 +116,63 @@ export class ClientsComponent implements OnInit {
     this.dialogVisible = true;
   }
 
-  showDialogEditClient() {
+  showDialogEditClient(client: Client) {
     this.isEditing = true;
     this.dialogVisible = true;
+    this.dataEdit = client;
+  }
+
+  onClientSaved(clientData: Client) {
+    this.loading = true;
+    if (this.isEditing && this.dataEdit) {
+      this.clientsService.updateClient(this.dataEdit.id, clientData).subscribe({
+        next: (response) => {
+          this.dialogVisible = false;
+          this.loading = false;
+          if (response.status) {
+            this.messageService.add({
+              severity: 'success',
+              summary: response.title || 'Cliente actualizado',
+              detail:
+                response.message ||
+                'El cliente se ha actualizado correctamente.',
+            });
+          }
+          this.fetchClients();
+        },
+        error: (error) => {
+          this.loading = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: error.title || 'Error al actualizar cliente',
+            detail: error.message || 'Por favor, inténtalo de nuevo más tarde.',
+          });
+        },
+      });
+    } else {
+      this.clientsService.createClient(clientData).subscribe({
+        next: (response) => {
+          this.dialogVisible = false;
+          this.loading = false;
+          if (response.status) {
+            this.messageService.add({
+              severity: 'success',
+              summary: response.title || 'Cliente creado',
+              detail:
+                response.message || 'El cliente se ha creado correctamente.',
+            });
+          }
+          this.fetchClients();
+        },
+        error: (error) => {
+          this.loading = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: error.title || 'Error al crear cliente',
+            detail: error.message || 'Por favor, inténtalo de nuevo más tarde.',
+          });
+        },
+      });
+    }
   }
 }

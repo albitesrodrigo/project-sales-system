@@ -12,23 +12,19 @@ export class ProductsService {
 
   getProducts(nameProduct: string): Observable<StatusResponse<Product[]>> {
     return this.http.get<StatusResponse<Product[]>>(
-      `/api/producto/${nameProduct}`
+      'clients/productos'
     );
   }
 
-  getProductById(id: string): Observable<StatusResponse<Product>> {
-    return this.http.get<StatusResponse<Product>>(`/api/producto/${id}`);
-  }
-
   createProduct(data: Product): Observable<StatusResponse<any>> {
-    return this.http.post<StatusResponse<any>>('/api/producto', data);
+    return this.http.post<StatusResponse<any>>('/productos', data);
   }
 
   updateProduct(id: string, data: Product): Observable<StatusResponse<any>> {
-    return this.http.put<StatusResponse<any>>(`/api/producto/${id}`, data);
+    return this.http.put<StatusResponse<any>>(`/productos/${id}`, data);
   }
 
   deleteProduct(id: string): Observable<StatusResponse<any>> {
-    return this.http.delete<StatusResponse<any>>(`/api/producto/${id}`);
+    return this.http.delete<StatusResponse<any>>(`/productos/${id}`);
   }
 }

@@ -36,7 +36,7 @@
     >
       <ng-template #header>
         <tr class="rounded-t-xl overflow-hidden">
-          <th class="custom-header text-center">#</th>
+          <th class="text-center">#</th>
           <th
             class="whitespace-nowrap font-bold"
             *ngFor="let col of columns"
@@ -49,7 +49,7 @@
       </ng-template>
       <ng-template #body let-producto let-i="rowIndex">
         <tr>
-          <td>{{ i + 1 }}</td>
+          <td class="text-center">{{ i + 1 }}</td>
           <td *ngFor="let col of columns">
             {{ producto[col.field] || "-" }}
           </td>
@@ -59,7 +59,7 @@
                 icon="pi pi-pencil"
                 severity="secondary"
                 size="small"
-                (click)="showDialogEditProduct()"
+                (click)="showDialogEditProduct(producto)"
               />
               <p-button
                 icon="pi pi-trash"
@@ -78,6 +78,8 @@
   [(visible)]="dialogVisible"
   (visibleChange)="dialogVisible = $event"
   [isEdit]="isEditing"
+  [productData]="dataEdit"
+  (productSaved)="onProductSaved($event)"
 ></app-dialog-product>
 <p-toast />
 <p-confirmdialog />

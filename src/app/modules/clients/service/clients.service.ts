@@ -12,23 +12,19 @@ export class ClientsService {
 
   getClients(nameClient: string): Observable<StatusResponse<Client[]>> {
     return this.http.get<StatusResponse<Client[]>>(
-      `/api/clients/${nameClient}`
+      'clients/clientes'
     );
   }
 
-  getClientById(id: string): Observable<StatusResponse<Client>> {
-    return this.http.get<StatusResponse<Client>>(`/api/clients/${id}`);
-  }
-
   createClient(data: Client): Observable<StatusResponse<any>> {
-    return this.http.post<StatusResponse<any>>('/api/clients', data);
+    return this.http.post<StatusResponse<any>>('/clientes', data);
   }
 
   updateClient(id: string, data: Client): Observable<StatusResponse<any>> {
-    return this.http.put<StatusResponse<any>>(`/api/clients/${id}`, data);
+    return this.http.put<StatusResponse<any>>(`/clientes/${id}`, data);
   }
 
   deleteClient(id: string): Observable<StatusResponse<any>> {
-    return this.http.delete<StatusResponse<any>>(`/api/clients/${id}`);
+    return this.http.delete<StatusResponse<any>>(`/clientes/${id}`);
   }
 }

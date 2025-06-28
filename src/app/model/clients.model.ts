@@ -1,13 +1,10 @@
 interface Client {
-    id: string;
-    name: string;
-    email: string;
-    phone?: string;
-    address?: string;
-    createdAt: Date;
-    updatedAt: Date;
+  id: string;
+  nombre: string;
+  apellido: string;
+  correo: string;
+  telefono: string;
+  dni: string;
 }
 
-export type {
-    Client
-}
+export type { Client };
