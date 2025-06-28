@@ -1,1 +1,62 @@
-<p>no-page-found works!</p>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+  <div class="max-w-md w-full text-center">
+    <!-- Icono animado -->
+    <div class="mb-8">
+      <div class="inline-flex items-center justify-center w-32 h-32 bg-white rounded-full shadow-lg mb-6">
+        <i class="pi pi-exclamation-triangle text-6xl text-orange-500 animate-bounce"></i>
+      </div>
+    </div>
+
+    <!-- Número 404 grande -->
+    <h1 class="text-8xl font-bold text-indigo-600 mb-4 animate-pulse">404</h1>
+    
+    <!-- Título -->
+    <h2 class="text-3xl font-semibold text-gray-800 mb-4">
+      ¡Oops! Página no encontrada
+    </h2>
+    
+    <!-- Descripción -->
+    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+      Lo sentimos, la página que estás buscando no existe o ha sido movida. 
+      Pero no te preocupes, puedes regresar al inicio.
+    </p>
+
+    <!-- Botones de acción -->
+    <div class="space-y-4">
+      <button 
+        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+        (click)="goHome()"
+      >
+        <i class="pi pi-home mr-2"></i>
+        Ir al Inicio
+      </button>
+      
+      <button 
+        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out"
+        (click)="goBack()"
+      >
+        <i class="pi pi-arrow-left mr-2"></i>
+        Volver Atrás
+      </button>
+    </div>
+
+    <!-- Sugerencias -->
+    <div class="mt-12 p-6 bg-white rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">¿Qué puedes hacer?</h3>
+      <ul class="text-sm text-gray-600 space-y-2">
+        <li class="flex items-center">
+          <i class="pi pi-check-circle text-green-500 mr-2"></i>
+          Verificar la URL en la barra de direcciones
+        </li>
+        <li class="flex items-center">
+          <i class="pi pi-check-circle text-green-500 mr-2"></i>
+          Navegar desde el menú principal
+        </li>
+        <li class="flex items-center">
+          <i class="pi pi-check-circle text-green-500 mr-2"></i>
+          Contactar al administrador si el problema persiste
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

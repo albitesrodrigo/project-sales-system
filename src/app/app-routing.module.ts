@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NoPageFoundComponent } from './shared/no-page-found/no-page-found.component';
 import { AuthComponent } from './auth/auth.component';
-import { ICON_NAMES } from './constants/icons';
 import { ClientsComponent } from './modules/clients/clients.component';
 import { ProductsComponent } from './modules/products/products.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+import { HomeComponent } from './modules/home/home.component';
 
 export const routes: Routes = [
   {
@@ -22,29 +22,20 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'clientes',
-        pathMatch: 'full'
+        path: 'home',
+        component: HomeComponent,
       },
       {
         path: 'clientes',
         title: 'Clientes',
         component: ClientsComponent,
-        data: {
-          breadcrumb: 'Gestión de clientes',
-          icon: ICON_NAMES.tractor,
-        },
       },
       {
         path: 'productos',
         title: 'Productos',
         component: ProductsComponent,
-        data: {
-          breadcrumb: 'Gestión de productos',
-          icon: ICON_NAMES.product,
-        },
       },
-    ]
+    ],
   },
   {
     path: '**',
