@@ -7,6 +7,7 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +19,28 @@ export class HomeComponent implements OnInit {
   data: any;
   options: any;
   platformId = inject(PLATFORM_ID);
+  menuNames: string[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private router: Router) {}
+  constructor(private cd: ChangeDetectorRef,
+    private authService: AuthService, private router: Router) {}
 
-  // Métodos de navegación
-  navigateToSales() {
+
+  ngOnInit() {
+    this.initChart();
+    this.authService.getMenus().subscribe((res) => {
+    if (res.status === 'success') {
+      this.menuNames = res.data.map((menu) => menu.nombre);
+      this.cd.markForCheck();
+    }
+  });
+  }
+
+  canAccess(menuName: string): boolean {
+  return this.menuNames.includes(menuName);
+}
+
+    // Métodos de navegación
+ /* navigateToSales() {
     this.router.navigate(['/inicio/ventas']);
   }
 
@@ -33,10 +51,25 @@ export class HomeComponent implements OnInit {
   navigateToProducts() {
     this.router.navigate(['/inicio/productos']);
   }
-
-  ngOnInit() {
-    this.initChart();
+*/
+navigateToSales() {
+  if (this.canAccess('Ventas')) {
+    this.router.navigate(['/inicio/ventas']);
   }
+}
+
+navigateToClients() {
+  if (this.canAccess('Clientes')) {
+    this.router.navigate(['/inicio/clientes']);
+  }
+}
+
+navigateToProducts() {
+  if (this.canAccess('Productos')) {
+    this.router.navigate(['/inicio/productos']);
+  }
+}
+
 
   initChart() {
     if (isPlatformBrowser(this.platformId)) {

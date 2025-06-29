@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import { Menu } from '../../model/menu.model';
+import { HttpClient } from '@angular/common/http';
+import { NotificacionService } from './service/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -13,35 +15,24 @@ import { Menu } from '../../model/menu.model';
 export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
   user: any;
+  notificacionesNoVistas: number = 0;
+  mostrarPanel: boolean = false;
+  notificaciones: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
-  /*
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'Sistema de Gestión de Ventas',
-        icon: 'pi pi-cog',
-        items: [
-          {
-            label: 'Clientes',
-            icon: 'pi pi-users',
-            command: () => this.router.navigate(['/inicio/clientes'])
-          },
-          {
-            label: 'Productos',
-            icon: 'pi pi-box',
-            command: () => this.router.navigate(['/inicio/productos'])
-          }
-        ]
-      }
-    ];
-  }
-*/
+selectedNotificacion: any = null;
+mostrarDialogo: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient,private notificacionService: NotificacionService) {}
+
   ngOnInit() {
     this.getMenu();
     this.getToken();
+    this.obtenerNotificacionesNoVistas();
+    this.obtenerNotificaciones();
+
   }
-  
+
+
   logout() {
     sessionStorage.clear();
     localStorage.clear();
@@ -71,7 +62,7 @@ export class MenuComponent implements OnInit {
         ];
       },
       error: (err) => {
-        console.error('❌ Error cargando menús:', err);
+        console.error('Error cargando menús:', err);
       },
     });
   }
@@ -99,4 +90,73 @@ export class MenuComponent implements OnInit {
       return null;
     }
   }
+
+obtenerNotificacionesNoVistas(): void {
+  this.notificacionService.getNotificacionesNoVistasCount().subscribe({
+    next: (resp) => {
+      this.notificacionesNoVistas = resp.data || 0;
+    },
+    error: (err) => {
+      console.error('Error al obtener notificaciones:', err);
+    },
+  });
+}
+
+obtenerNotificaciones(): void {
+  this.notificacionService.getNotificaciones().subscribe({
+    next: (resp) => {
+      this.notificaciones = resp.data || [];
+    },
+    error: (err) => {
+      console.error('Error al obtener notificaciones:', err);
+    },
+  });
+}
+
+marcarComoVista(id: number): void {
+  this.notificacionService.marcarComoVista(id).subscribe({
+    next: () => {
+      this.obtenerNotificaciones();
+      this.obtenerNotificacionesNoVistas();
+    },
+    error: (err) => {
+      console.error('Error al marcar notificación como vista:', err);
+    },
+  });
+}
+
+
+
+    togglePanel(): void {
+    this.mostrarPanel = !this.mostrarPanel;
+    if (this.mostrarPanel) {
+      this.obtenerNotificaciones();
+    }
+  }
+
+
+
+ventaSeleccionada: any = null;
+
+
+abrirDetalle(notif: any): void {
+  this.selectedNotificacion = notif;
+  this.mostrarDialogo = true;
+
+  if (notif.visto === 'No') {
+    this.marcarComoVista(notif.id);
+  }
+
+  // Cargar venta
+  this.notificacionService.getVentaPorNro(notif.nroventa).subscribe({
+    next: (resp) => {
+      this.ventaSeleccionada = resp.data;
+    },
+    error: (err) => {
+      console.error('Error al obtener venta:', err);
+    }
+  });
+}
+
+
 }
