@@ -14,6 +14,7 @@ export class DialogSalesComponent {
   @Input() products: Product[] = [];
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() salesSaved = new EventEmitter<any[]>();
+
   salesData: any = {};
   selectClient: any;
   selectProductIds: number[] = [];
@@ -22,7 +23,12 @@ export class DialogSalesComponent {
 
   cleanForm() {
     this.salesData = [];
+    this.selectClient = null;
+    this.selectProductIds = [];
+    this.selectProduct = [];
+    this.totalAmount = 0;
   }
+
   onSave() {
     this.salesData = this.selectProduct.map((prod) => ({
       producto: { id: prod.id },

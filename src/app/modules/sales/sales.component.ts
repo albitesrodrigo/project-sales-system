@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SalesService } from './service/sales.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { COLS_VENTAS } from '../../data/headers';
@@ -7,6 +7,7 @@ import { ClientsService } from '../clients/service/clients.service';
 import { Client } from '../../model/clients.model';
 import { ProductsService } from '../products/service/products.service';
 import { Product } from '../../model/products.model';
+import { DialogSalesComponent } from '../../shared/dialog-sales/dialog-sales.component';
 
 @Component({
   selector: 'app-sales',
@@ -15,6 +16,8 @@ import { Product } from '../../model/products.model';
   standalone: false,
 })
 export class SalesComponent implements OnInit {
+  @ViewChild(DialogSalesComponent) dialogSalesComponent!: DialogSalesComponent;
+
   constructor(
     private salesService: SalesService,
     private messageService: MessageService,
@@ -130,6 +133,7 @@ export class SalesComponent implements OnInit {
         if (response.status === 'success') {
           this.loading = false;
           this.dialogVisible = false;
+          this.dialogSalesComponent.cleanForm();
           this.messageService.add({
             severity: 'success',
             summary: response.title || 'Venta creada',
