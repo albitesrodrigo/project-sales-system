@@ -214,4 +214,9 @@ export class ProductsComponent implements OnInit {
       });
     }
   }
+
+  filterGlobal(table: any, event: Event) {
+    const input = event.target as HTMLInputElement;
+    table.filterGlobal(input.value, 'contains');
+  }
 }

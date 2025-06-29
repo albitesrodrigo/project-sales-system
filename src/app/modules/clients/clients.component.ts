@@ -136,7 +136,7 @@ export class ClientsComponent implements OnInit {
       correo: clientData.correo.trim(),
       telefono: clientData.telefono.trim(),
       dni: clientData.dni.trim(),
-    }
+    };
     if (this.isEditing && this.dataEdit) {
       this.clientsService.updateClient(this.dataEdit.id, clientData).subscribe({
         next: (response) => {
@@ -216,5 +216,10 @@ export class ClientsComponent implements OnInit {
         },
       });
     }
+  }
+
+  filterGlobal(table: any, event: Event) {
+    const input = event.target as HTMLInputElement;
+    table.filterGlobal(input.value, 'contains');
   }
 }

@@ -22,13 +22,20 @@ import { DialogModule } from 'primeng/dialog';
 import { DialogClientComponent } from './dialog-client/dialog-client.component';
 import { DialogProductComponent } from './dialog-product/dialog-product.component';
 import { ChartModule } from 'primeng/chart';
+import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { DialogSalesComponent } from './dialog-sales/dialog-sales.component';
+import { SelectModule } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent, 
     MenuComponent, 
     DialogClientComponent,
-    DialogProductComponent
+    DialogProductComponent,
+    DialogSalesComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +56,12 @@ import { ChartModule } from 'primeng/chart';
     PaginatorModule,
     ConfirmDialogModule,
     DialogModule,
-    ChartModule
+    ChartModule,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+    SelectModule,
+    MultiSelectModule
   ],
   exports: [
     CommonModule,
@@ -74,7 +86,13 @@ import { ChartModule } from 'primeng/chart';
     DialogModule,
     ChartModule,
     DialogClientComponent,
-    DialogProductComponent
+    DialogProductComponent,
+    DialogSalesComponent,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+    SelectModule,
+    MultiSelectModule
   ],
   providers: [ConfirmationService, MessageService],
 })

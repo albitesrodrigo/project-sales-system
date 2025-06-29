@@ -1,0 +1,92 @@
+<p-dialog
+  header="Registrar Ventas"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '40rem' }"
+  (onHide)="visibleChange.emit(false)"
+>
+  <div class="grid grid-cols-3 gap-4 mb-4 items-center">
+    <label for="nombre" class="col-span-1 font-semibold">Cliente</label>
+    <p-select
+      [options]="clients"
+      [(ngModel)]="selectClient"
+      optionLabel="nombre"
+      [filter]="true"
+      filterBy="nombre"
+      [showClear]="true"
+      placeholder="Seleccionar cliente"
+      class="col-span-2"
+    >
+    </p-select>
+  </div>
+  <div class="grid grid-cols-3 gap-4 mb-4 items-center">
+    <label for="nombre" class="col-span-1 font-semibold">Producto</label>
+    <p-multiselect
+      [options]="products"
+      [(ngModel)]="selectProductIds"
+      [filter]="true"
+      optionLabel="nombre"
+      optionValue="id"
+      placeholder="Seleccionar producto"
+      class="col-span-2"
+      (onChange)="onProductSelect($event)"
+    />
+  </div>
+  <!-- Agregamos una tabla temporal para agregar productos-->
+  <div class="mb-4">
+    <p-table [value]="selectProduct" showGridlines>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Sub Total</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.nombre }}</td>
+          <td>{{ product.precio | currency : "PEN" }}</td>
+          <td>{{ product.cantidad }}</td>
+          <td>{{ product.precio * product.cantidad | currency : "PEN" }}</td>
+          <td>
+            <div class="flex justify-center gap-2">
+              <p-button
+                icon="pi pi-plus"
+                severity="success"
+                (click)="addQuantity(product)"
+              ></p-button>
+              <p-button
+                icon="pi pi-trash"
+                severity="danger"
+                (click)="removeQuantity(product)"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr *ngIf="selectProduct.length > 0">
+          <td colspan="5" class="text-right font-bold">Total:</td>
+          <td class="font-bold">{{ totalAmount | currency : "PEN" }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="text-center text-gray-400 py-8">
+            <i class="pi pi-info-circle mr-2"></i>
+            No hay productos agregados.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <p-button label="Cancelar" severity="secondary" (click)="onCancel()" />
+    <p-button label="Guardar" (click)="onSave()" />
+  </div>
+</p-dialog>

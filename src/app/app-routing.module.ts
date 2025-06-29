@@ -6,6 +6,7 @@ import { ClientsComponent } from './modules/clients/clients.component';
 import { ProductsComponent } from './modules/products/products.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HomeComponent } from './modules/home/home.component';
+import { SalesComponent } from './modules/sales/sales.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +24,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'home',
+        title: 'Inicio',
         component: HomeComponent,
+      },
+      {
+        path: 'ventas',
+        title: 'Ventas',
+        component: SalesComponent,
       },
       {
         path: 'clientes',

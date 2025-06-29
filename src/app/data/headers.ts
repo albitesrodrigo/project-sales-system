@@ -11,3 +11,10 @@ export const COLS_PRODUCTOS = [
   { field: 'precio', header: 'Precio' },
   { field: 'stock', header: 'Stock' },
 ];
+
+export const COLS_VENTAS = [
+  { field: 'codigo', header: 'Código' },
+  { field: 'nombreCliente', header: 'Cliente' },
+  { field: 'fecha', header: 'Fecha' },
+  { field: 'montoTotal', header: 'Monto Total' },
+];
