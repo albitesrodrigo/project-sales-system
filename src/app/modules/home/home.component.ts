@@ -34,10 +34,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/inicio/productos']);
   }
 
-  navigateViewSales() {
-    this.router.navigate(['/inicio/ver-ventas']);
-  }
-
   ngOnInit() {
     this.initChart();
   }
