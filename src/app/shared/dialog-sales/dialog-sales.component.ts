@@ -44,6 +44,7 @@ export class DialogSalesComponent {
   onCancel() {
     this.visible = false;
     this.visibleChange.emit(false);
+    this.cleanForm();
   }
   onProductSelect(event: any) {
     // Fuerza los IDs a tipo number
